@@ -6,7 +6,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaksi - Portfolio Aset</title>
-    <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+    <style>
+        /* CSS styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #2c003e, #000);
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            width: 100%;
+            padding: 10px 0;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #bb86fc;
+            transform: scale(1.1);
+        }
+
+        /* Search and transaction form styling */
+        .search-container,
+        .transaction-form {
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .search-container input,
+        .transaction-form input,
+        .transaction-form select,
+        .search-container button,
+        .transaction-form button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(34, 34, 34, 0.9);
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        button {
+            cursor: pointer;
+            background: linear-gradient(90deg, #8e2de2, #4a00e0);
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #4a00e0, #8e2de2);
+            transform: scale(1.05);
+        }
+
+        /* Table styling */
+        .transaction-list {
+            margin-top: 20px;
+            padding: 15px;
+            width: 90%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .transaction-list h2 {
+            color: #bb86fc;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            color: #e0e0e0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        table th {
+            background: rgba(34, 34, 34, 0.9);
+        }
+
+        table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.01);
+            transition: all 0.3s;
+        }
+
+        /* Footer styling */
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            color: #e0e0e0;
+            background: rgba(0, 0, 0, 0.8);
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -42,8 +191,8 @@
 
             <label for="type">Jenis Transaksi:</label>
             <select name="type" id="type" required>
-                <option value="purchase">purchase</option>
-                <option value="sale">sale</option>
+                <option value="purchase">Pembelian</option>
+                <option value="sale">Penjualan</option>
             </select>
 
             <label for="amount">Jumlah:</label>

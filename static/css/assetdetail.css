@@ -1,0 +1,119 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #141E30, #243B55);
+    /* Gradasi hitam dan ungu */
+    color: #fff;
+    transition: background 0.5s ease;
+}
+
+.navbar {
+    background-color: rgba(20, 20, 20, 0.8);
+    /* Transparan hitam */
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar li {
+    margin: 0 15px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #FF6347;
+    /* Warna saat hover */
+}
+
+.asset-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    background: rgba(36, 59, 85, 0.9);
+    /* Latar belakang transparan */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease-in;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+h3 {
+    border-bottom: 2px solid #FF6347;
+    /* Garis bawah untuk heading */
+    padding-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #555;
+}
+
+th {
+    background: rgba(20, 20, 20, 0.8);
+    /* Latar belakang untuk header tabel */
+}
+
+tr:hover {
+    background-color: rgba(255, 99, 132, 0.3);
+    /* Efek hover untuk baris tabel */
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: rgba(20, 20, 20, 0.8);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Animasi untuk fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsif */
+@media (max-width: 600px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .asset-detail {
+        padding: 15px;
+    }
+}

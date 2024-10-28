@@ -1,0 +1,98 @@
+/* Styling umum */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    background-color: #1a1a2e;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #0f3460;
+    text-align: center;
+    padding: 1rem;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar ul li {
+    margin: 0 1rem;
+}
+
+.navbar ul li a {
+    color: #e94560;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+    color: #00d4ff;
+}
+
+/* Ringkasan */
+.summary {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.summary p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+/* Styling untuk grafik */
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    margin: 2rem;
+}
+
+.chart-container {
+    background: #162447;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+    width: 45%;
+}
+
+.chart-container:hover {
+    transform: scale(1.05);
+}
+
+.chart-container h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #e94560;
+    margin-bottom: 1rem;
+}
+
+/* Animasi untuk efek */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chart-container {
+    animation: fadeIn 0.5s ease-in-out;
+}

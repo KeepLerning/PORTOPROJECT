@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Portfolio Aset</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- CDN Chart.js -->
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'asset_list' %}">Daftar Aset</a></li>
+            <li><a href="{% url 'transactions' %}">Transaksi</a></li>
+            <li><a href="{% url 'admin:index' %}" class="admin-button">Admin</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <div class="dashboard">
+        <!-- Ringkasan Nilai Total Aset -->
+        <div class="summary">
+            <h2>Ringkasan Portofolio</h2>
+            <p>Total Nilai Aset: <span id="total-value">Rp1,500,000,000</span></p>
+        </div>
+
+        <!-- Grafik untuk masing-masing aset -->
+        <div class="charts">
+            <div class="chart-container">
+                <h3>Bitcoin</h3>    
+                <canvas id="bitcoinChart"></canvas>
+                
+            </div>
+            <div class="chart-container">
+                <h3>Ethereum (ETH)</h3>
+                <canvas id="ethChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Saham BCA</h3>
+                <canvas id="bcaChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>S&P 500</h3>
+                <canvas id="sp500Chart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Nasdaq</h3>
+                <canvas id="nasdaqChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script untuk Chart.js -->
+    <script>
+        // Data untuk masing-masing aset (contoh data)
+        const dataBitcoin = [35000, 37000, 36000, 38000, 40000, 42000];
+        const dataETH = [2000, 2100, 2200, 2150, 2250, 2300];
+        const dataBCA = [30000, 31000, 32000, 33000, 34000, 35000];
+        const dataSP500 = [3800, 3900, 4000, 4100, 4200, 4300];
+        const dataNasdaq = [13000, 13500, 13800, 14000, 14200, 14500];
+
+        // Konfigurasi warna dan style untuk Chart.js
+        const chartConfig = (ctx, label, data, borderColor, backgroundColor) => new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: label,
+                    data: data,
+                    borderColor: borderColor,
+                    backgroundColor: backgroundColor,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Bulan' } },
+                    y: { title: { display: true, text: 'Nilai (Rp)' } }
+                }
+            }
+        });
+
+        // Fetch data untuk Pie Chart (contoh async request)
+        async function loadPieChart() {
+            try {
+                const response = await fetch('/asset-data/');
+                if (!response.ok) throw new Error("Network response was not ok");
+
+                const data = await response.json();
+                const ctx = document.getElementById('assetChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            data: data.values,
+                            backgroundColor: ['#4b0082', '#32cd32', '#1e90ff'],
+                        }]
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching pie chart data:", error);
+            }
+        }
+
+        loadPieChart();
+
+        // Inisialisasi grafik untuk masing-masing aset
+        chartConfig(document.getElementById('bitcoinChart').getContext('2d'), 'Bitcoin', dataBitcoin, 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 0.2)');
+        chartConfig(document.getElementById('ethChart').getContext('2d'), 'Ethereum (ETH)', dataETH, 'rgba(153, 102, 255, 1)', 'rgba(153, 102, 255, 0.2)');
+        chartConfig(document.getElementById('bcaChart').getContext('2d'), 'Saham BCA', dataBCA, 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 0.2)');
+        chartConfig(document.getElementById('sp500Chart').getContext('2d'), 'S&P 500', dataSP500, 'rgba(255, 99, 132, 1)', 'rgba(255, 99, 132, 0.2)');
+        chartConfig(document.getElementById('nasdaqChart').getContext('2d'), 'Nasdaq', dataNasdaq, 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 0.2)');
+    </script>
+    
+</body>
+</html>

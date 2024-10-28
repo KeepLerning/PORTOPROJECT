@@ -1,0 +1,88 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi - Portfolio Aset</title>
+    <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'asset_list' %}">Daftar Aset</a></li>
+            <li><a href="{% url 'transactions' %}">Transaksi</a></li>
+        </ul>
+    </nav>
+
+    <!-- Pencarian Transaksi -->
+    <div class="search-container">
+        <form method="GET" action="{% url 'transactions_filter' %}">
+            <input type="text" name="type" placeholder="Cari Jenis Transaksi" value="{{ request.GET.type }}">
+            <input type="date" name="date" value="{{ request.GET.date }}">
+            <button type="submit">Cari</button>
+        </form>
+    </div>
+
+    <!-- Form Transaksi -->
+    <div class="transaction-form">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="asset">Pilih Aset:</label>
+            <select name="asset" id="asset" required>
+                {% for asset in assets %}
+                    <option value="{{ asset.id }}">{{ asset.asset_name }}</option>
+                {% empty %}
+                    <option value="">Tidak ada aset tersedia</option>
+                {% endfor %}
+            </select>
+
+            <label for="type">Jenis Transaksi:</label>
+            <select name="type" id="type" required>
+                <option value="purchase">purchase</option>
+                <option value="sale">sale</option>
+            </select>
+
+            <label for="amount">Jumlah:</label>
+            <input type="number" name="amount" id="amount" min="1" required>
+
+            <button type="submit">Simpan Transaksi</button>
+        </form>
+    </div>
+
+    <!-- Daftar Transaksi Section -->
+    <div class="transaction-list">
+        <h2>Daftar Transaksi</h2>
+        {% if transactions %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Jumlah</th>
+                        <th>Jenis Transaksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.date|date:"Y-m-d H:i:s" }}</td> <!-- Format tanggal -->
+                        <td>{{ transaction.amount|intcomma }}</td>
+                        <td>{{ transaction.type }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Tidak ada transaksi yang tersedia.</p>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Portfolio Aset. All rights reserved.</p>
+    </footer>
+</body>
+</html>

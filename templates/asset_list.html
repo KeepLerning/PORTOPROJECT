@@ -1,0 +1,99 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Aset - Portfolio Aset</title>
+    <link rel="stylesheet" href="{% static 'css/assetlist.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'asset_list' %}">Daftar Aset</a></li>
+            <li><a href="{% url 'transactions' %}">Transaksi</a></li>
+        </ul>
+    </nav>
+
+    <!-- Daftar Aset Section -->
+    <div class="asset-list">
+        <h2>Daftar Aset</h2>
+        {% if assets %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama Aset</th>
+                        <th>Jumlah</th> 
+                        <th>Kategori</th>
+                        <th>Nilai Saat Ini</th>
+                        <th>Perubahan Nilai (%)</th>
+                        <th>Detail Asset</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for asset in assets %}
+                    <tr>
+                        <td>{{ asset.asset_name }}</td>
+                        <td>{{ asset.quantity }}</td> 
+                        <td>{{ asset.category }}</td>
+                        <td>USD {{ asset.current_value|intcomma }}</td>
+                        <td>
+                            {% if asset.change_percentage is not None %}
+                                {{ asset.change_percentage|floatformat:2 }}%
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'asset_detail' asset.id %}">Lihat Detail</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Tidak ada aset yang tersedia.</p>
+        {% endif %}
+    </div>
+<!-- Grafik untuk Aset -->
+<div class="chart-container">
+    <canvas id="assetChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('assetChart').getContext('2d');
+    const assetChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for asset in assets %}'{{ asset.asset_name }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+                label: 'Nilai Aset (USD)',
+                data: [{% for asset in assets %}{{ asset.current_value }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Nilai (USD)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Portfolio Aset. All rights reserved.</p>
+    </footer>
+</body>
+</html>

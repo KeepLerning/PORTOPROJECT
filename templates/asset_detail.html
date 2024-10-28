@@ -1,0 +1,59 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Aset - Portfolio Aset</title>
+    <link rel="stylesheet" href="{% static 'css/assetdetail.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'asset_list' %}">Daftar Aset</a></li>
+            <li><a href="#">Detail Aset</a></li>
+            <li><a href="{% url 'transactions' %}">Transaksi</a></li>
+        </ul>
+    </nav>
+
+    <!-- Detail Aset Section -->
+    <div class="asset-detail">
+        <h2>Detail Aset: {{ asset.asset_name }}</h2>
+        <p>Nilai Aset: <span id="asset-value">Rp{{ asset.current_value|intcomma }}</span></p>
+        <p>Jumlah: <span id="asset-quantity">{{ asset.quantity }}</span></p>
+        <p>Kategori: <span id="asset-category">{{ asset.category }}</span></p>
+        
+        <h3>Riwayat Transaksi</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Jumlah</th>
+                    <th>Jenis Transaksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in asset.transaction_set.all %}
+                    <tr>
+                        <td>{{ transaction.date }}</td>
+                        <td>{{ transaction.amount|intcomma }}</td>
+                        <td>{{ transaction.type }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Tidak ada transaksi untuk aset ini.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Optional Script for additional functionality -->
+    <script>
+        // You can add additional JavaScript here if needed
+    </script>
+</body>
+</html>

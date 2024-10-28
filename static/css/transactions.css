@@ -1,0 +1,87 @@
+/* dashboard.css */
+
+/* Body and overall styling */
+body {
+    background-color: #1a1a1a;
+    /* Background hitam */
+    color: #ffffff;
+    /* Teks berwarna putih */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #282c34;
+    /* Warna navbar */
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar li {
+    margin: 0 15px;
+}
+
+.navbar a {
+    color: #61dafb;
+    /* Biru terang untuk tautan */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #bada55;
+    /* Hijau untuk efek hover */
+}
+
+/* Transactions Section */
+.transactions {
+    background-color: #2b2b2b;
+    /* Background untuk detail transaksi */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    color: #d678f6;
+    /* Ungu untuk judul */
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+th {
+    background-color: #444;
+    color: #bada55;
+    /* Hijau untuk header tabel */
+}
+
+tr:hover {
+    background-color: #333;
+    /* Warna latar belakang saat hover */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #2b2b2b;
+    /* Warna latar belakang baris genap */
+}
